@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
-
+import Spinner from '../spinner';
 import './person-details.css';
 
 export default class PersonDetails extends Component {
   swapiApi = new SwapiService();
 
   state = {
-    person: null
+    person: null,
+    loading: true
   }
 
   componentDidMount () {
@@ -23,9 +24,10 @@ export default class PersonDetails extends Component {
   updatePerson () {
     const { personId } = this.props;
     if(!personId) return;
+    this.setState({ loading: true})
     this.swapiApi.getPerson(personId)
     .then( person => {
-      this.setState({ person })
+      this.setState({ person, loading: false })
     })
   }
 
@@ -34,12 +36,26 @@ export default class PersonDetails extends Component {
       return <span>Select a person from a list</span>;
     }
 
-    const {id, name, gender, birthYear, eyeColor} = this.state.person;
+    const { loading, person} = this.state;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !loading ? <PersonContent person={person}/> : null;
     return (
+      
       <div className="person-details card">
-        <img className="person-image" alt="person"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}/>
+        {spinner}
+        {content}
+      </div>
+    )
+  }
+}
 
+
+const PersonContent = ( {person} ) => {
+  const { id, name, gender, birthYear, eyeColor} = person;
+  return (
+    <React.Fragment>
+       <img className="person-image" alt="person"
+          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}/>
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
@@ -57,7 +73,6 @@ export default class PersonDetails extends Component {
             </li>
           </ul>
         </div>
-      </div>
-    )
-  }
+    </React.Fragment>
+  )
 }
