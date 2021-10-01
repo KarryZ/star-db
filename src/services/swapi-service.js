@@ -42,7 +42,7 @@ export default class SwapiService {
     return item.split("/").slice(-2, -1).join();
   }
 
-  _transformPlanet(planetData) {
+  _transformPlanet = (planetData) => {
     return {
       id: this._extractId(planetData.url),
       name: planetData.name,
@@ -52,9 +52,9 @@ export default class SwapiService {
     }
   }
 
-  _transformStarship(starship) {
+  _transformStarship = (starship) => {
     return {
-      id: this._extractId(starship),
+      id: this._extractId(starship.url),
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
@@ -66,13 +66,13 @@ export default class SwapiService {
     }
   }
 
-  _transformPerson(person) {
+  _transformPerson = (person) => {
     return {
-      id: this._extractId(person),
+      id: this._extractId(person.url),
       name: person.name,
       gender: person.gender,
-      birthYear: person.birthYear,
-      eyeColor: person.eyeColor
+      birthYear: person.birth_year,
+      eyeColor: person.eye_color
     }
   }
 
