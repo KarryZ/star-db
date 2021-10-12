@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
+import ErrorButton from '../error-button/error-button';
+
 import './person-details.css';
 
 export default class PersonDetails extends Component {
@@ -21,6 +23,8 @@ export default class PersonDetails extends Component {
     }
   }
 
+  
+
   updatePerson () {
     const { personId } = this.props;
     if(!personId) return;
@@ -31,12 +35,10 @@ export default class PersonDetails extends Component {
     })
   }
 
-  render() {    
-    if (!this.state.person) {
-      return <span>Select a person from a list</span>;
-    }
-
-    const { loading, person} = this.state;
+  render() {
+    const { loading, person} = this.state;    
+    if (!person) return <span>Select a person from a list</span>;
+    
     const spinner = loading ? <Spinner /> : null;
     const content = !loading ? <PersonContent person={person}/> : null;
     return (
@@ -44,6 +46,7 @@ export default class PersonDetails extends Component {
       <div className="person-details card">
         {spinner}
         {content}
+        
       </div>
     )
   }
@@ -72,6 +75,7 @@ const PersonContent = ( {person} ) => {
               <span>{eyeColor}</span>
             </li>
           </ul>
+          <ErrorButton />
         </div>
     </React.Fragment>
   )
