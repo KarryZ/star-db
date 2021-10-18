@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ItemDetails, {Record} from '../item-details';
-import Row from '../row';
 import ErrorIndicator from '../error-indicator';
+import ErrorBoundry from '../error-boundry/error-boundry';
 import SwapiService from '../../services/swapi-service';
 import './app.css';
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails
+} from '../sw-components';
+
 
 
 
@@ -32,47 +41,24 @@ export default class App extends Component {
   render() {
     if ( this.state.hasError) return <ErrorIndicator />;
     const planet = this.state.showRandomPlanet ?
-      <RandomPlanet/> :
-      null;
-      
-    const {getPerson, getStarship, getPersonImage, getStarShipImage} = this.swapiApi;
-    const personDetails = (
-      <ItemDetails 
-        itemId={4}
-        getData={getPerson}
-        getImageUrl={getPersonImage}>
-          <Record label="Gender" field="gender"/> 
-          <Record label="Eye Color" field="eyeColor"/> 
-      </ItemDetails>
-    );
-    const starShipDetails = (
-      <ItemDetails 
-        itemId={12}
-        getData={getStarship}
-        getImageUrl={getStarShipImage}>
-          <Record label="Model" field="model"/> 
-          <Record label="Manufacturer" field="manufacturer"/> 
-      </ItemDetails>
-    );
+      <RandomPlanet/> :  null;
+    
     return (
-      <div className="container">
-        
-        <Header/>        
-        {/* {planet}
-        <div className="btns-container">
-        <button
-            className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
-          </button>
-          <ErrorButton />
-        </div> 
-        <PeoplePage /> */}
-      
-       <Row left={personDetails} right={starShipDetails} />
+      <ErrorBoundry>
+        <div className="stardb-app">
+          <Header />
+          <PersonDetails itemId={11} />
+          <PlanetDetails itemId={11} />
+          <StarshipDetails itemId={11} />
 
-      </div>
-    )
+          <PersonList />        
+          <PlanetList />
+          <StarshipList />
+           
+
+        </div>
+      </ErrorBoundry>
+    );
   }
   
 }
