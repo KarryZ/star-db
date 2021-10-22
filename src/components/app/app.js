@@ -15,7 +15,9 @@ import {
   StarshipDetails
 } from '../sw-components';
 
-
+import {
+  SwapiServiceProvider
+} from '../swapi-service-context';
 
 
 export default class App extends Component {
@@ -45,6 +47,7 @@ export default class App extends Component {
     
     return (
       <ErrorBoundry>
+        <SwapiServiceProvider value={this.swapiApi}>
         <div className="stardb-app">
           <Header />
           <PersonDetails itemId={11} />
@@ -54,9 +57,8 @@ export default class App extends Component {
           <PersonList />        
           <PlanetList />
           <StarshipList />
-           
-
         </div>
+        </SwapiServiceProvider>
       </ErrorBoundry>
     );
   }
