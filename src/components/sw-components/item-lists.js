@@ -1,14 +1,6 @@
 import React from "react";
 import ItemList from "../item-list";
-import { WithData } from "../hoc-helpers";
-import SwapiService from "../../services/swapi-service";
-
-const swapiService = new SwapiService();
-const {
-    getAllPeople,
-    getAllPlanets,    
-    getAllStarShips
-} = swapiService;
+import { WithData, WithSwapiService } from "../hoc-helpers";
 
 const WithChildrenFunc = (Wrapped, fn) => {
     return (props) => {
@@ -18,25 +10,38 @@ const WithChildrenFunc = (Wrapped, fn) => {
             </Wrapped>
         );
     }
-}
-
-const ListWithChildren = WithChildrenFunc(
-    ItemList,
-    ({name}) => <span>{name}</span>
-);
+};
 
 const renderName = ({name}) => <span>{name}</span>;
 const renderModelAndName = ({name, model}) => <span>{name} ({model})</span>;
 
-const PersonList = WithData(
-                    WithChildrenFunc(ItemList, renderName), 
-                    getAllPeople);
+const mapPersonMethodsToProps = (swapiService) => {
+    return {
+        getData: swapiService.getAllPeople
+    }
+};
+const mapPlanetMethodsToProps = (swapiService) => {
+    return {
+        getData: swapiService.getAllPlanets
+    }
+};
+const mapStarshipMethodsToProps = (swapiService) => {
+    return {
+        getData: swapiService.getAllStarShips
+    }
+};
 
-const PlanetList =  WithData(ListWithChildren, getAllPlanets);
+const PersonList = WithSwapiService(
+                    WithData( WithChildrenFunc(ItemList, renderName)),
+                    mapPersonMethodsToProps );
 
-const StarshipList =  WithData( 
-                        WithChildrenFunc(ItemList, renderModelAndName), 
-                        getAllStarShips);
+const PlanetList = WithSwapiService(
+                    WithData( WithChildrenFunc(ItemList, renderName) ), 
+                        mapPlanetMethodsToProps );
+
+const StarshipList = WithSwapiService(
+                        WithData( WithChildrenFunc(ItemList, renderModelAndName) ),
+                        mapStarshipMethodsToProps );
 
 export {
     PersonList,
