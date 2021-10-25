@@ -6,19 +6,19 @@ const Header = ({onServiceChange}) => {
   return (
     <div className="header d-flex">
       <h3>
-        <a href="#">
+        <div >
           Star DB
-        </a>
+        </div>
       </h3>
       <ul className="d-flex">
         <li>
-          <a href="#">People</a>
+          <div >People</div>
         </li>
         <li>
-          <a href="#">Planets</a>
+          <div>Planets</div>
         </li>
         <li>
-          <a href="#">Starships</a>
+          <div >Starships</div>
         </li>
       </ul>
       <button 
