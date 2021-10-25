@@ -13,7 +13,7 @@ export default class SwapiService {
     return `${this._imageBase}/characters/${id}.jpg`
   }
 
-  getStarShipImage = ({id}) => {
+  getStarshipImage = ({id}) => {
     return `${this._imageBase}/starships/${id}.jpg`
   }
 
@@ -41,7 +41,7 @@ export default class SwapiService {
     return this._transformPlanet(planet);
   }
 
-  getAllStarShips = async () => {
+  getAllStarships = async () => {
     const res = await this.getResource(`/starships/`);
      return res.results.map(this._transformStarship);
   }

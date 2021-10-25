@@ -9,6 +9,16 @@ const WithData = (View) => {
         } 
       
         componentDidMount () {
+          this.updateData();
+        }
+
+        componentDidUpdate (prevProps) {
+          if ( this.props.getData !== prevProps.getData ) {
+            this.updateData();
+          }
+        }
+
+        updateData () {
           this.props.getData()
           .then((odata) => {
             this.setState({odata});
