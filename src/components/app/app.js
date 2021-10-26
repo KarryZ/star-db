@@ -37,7 +37,7 @@ export default class App extends Component {
         <SwapiServiceProvider value={this.state.service}>
         <div className="stardb-app container">
           <Header onServiceChange={this.onServiceChange}/>
-          <RandomPlanet/>           
+          <RandomPlanet />           
           <PeoplePage />
           <PlanetPage />
           <StarshipsPage />
@@ -47,6 +47,6 @@ export default class App extends Component {
       </ErrorBoundry>
     );
   }
-  
+    
 }
 
