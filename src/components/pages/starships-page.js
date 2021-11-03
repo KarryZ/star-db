@@ -3,13 +3,11 @@ import { StarshipList } from '../sw-components';
 import { withRouter } from "react-router-dom";
 
  const StarshipsPage =  ({ history }) => {
- 
+    
  
     return (
     <StarshipList 
-        onSelectItem={(itemId) => {
-            history.push(`/starships/${itemId}`);
-        }}/>
+        onSelectItem={(itemId) => history.push(itemId)}/>
     );
 };
 
